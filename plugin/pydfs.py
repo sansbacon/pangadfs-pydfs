@@ -29,21 +29,23 @@ class PyDfsPool(PoolBase):
         # can also take a list of list of dicts
         wanted = ['id', 'team', 'salary', 'fppg']
         selected_players = []
-        lineup_size = len(lineups[0]) if isinstance(lineups[0], dict) else len(lineups[0].players)
-        for l in lineups:
-            for p in l.lineup:
-                if isinstance(p, Player):
+        if isinstance(lineups[0], Lineup):
+            for l in lineups:
+                for p in l.lineup:
                     pl = {'used_fppg': p.used_fppg}
                     pl = dict(**pl, **{k:v for k, v in p._player.__dict__.items() if k in wanted})
                     pl['position'] = p.positions[0]
                     pl['proj'] = p._player.fppg
-                else:
-                    pl = {k: v if isinstance(v, str) else v[0] 
+                    selected_players.append(pl)
+        else:
+            for l in lineups:
+                for p in l:
+                    pl = {k: v[0] if isinstance(v, list) else v 
                           for k, v in p.items() if k in wanted}
-                selected_players.append(pl)
-        df = pd.DataFrame(selected_players)
-
+                    selected_players.append(pl)
+                
         # get player ids and add to dataframe
+        df = pd.DataFrame(selected_players)
         xref = {a: b for a, b in zip(df.id.unique(), np.arange(len(df.id.unique())))}
         return df.assign(uid=df.id.map(xref))
 
@@ -69,7 +71,7 @@ class PyDfsPopulate(PopulateBase):
         # pydfs-lineup-optimizer uses QB, RB, RB, WR, WR, WR, TE, FLEX, DST
         # pangadfs uses DST, QB, TE, RB, RB, WR, WR, WR, FLEX        
         lineup_size = len(position_order)
-        n_lineups = len(pool) / lineup_size
+        n_lineups = len(pool) // lineup_size
         lineup_array = pool.uid.values.reshape(n_lineups, lineup_size)
         population = lineup_array[:, position_order]
         return np.random.permutation(population)

@@ -6,8 +6,8 @@ def run():
         name='pangadfs-pydfsoptimizer',
         packages=find_packages(),
         entry_points={
-          'pangadfs.pool': ['pool_pydfs = plugin.pydfs.PyDfsPool'],
-          'pangadfs.populate': ['populate_pydfs = plugin.pydfs:PyDfsPopulate'],
+          'pangadfs.pool': ['pool_pydfs = plugin:PyDfsPool'],
+          'pangadfs.populate': ['populate_pydfs = plugin:PyDfsPopulate'],
         },
         zip_safe=False,
     )
