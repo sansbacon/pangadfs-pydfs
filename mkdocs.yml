@@ -1,0 +1,26 @@
+# site configuration
+site_name: pangadfs-pydfsoptimizer
+site_url: https://sansbacon.github.io/pangadfs-pydfsoptimizer/
+site_description: plugin for pangadfs interop with pydfs-lineup-optimizer
+site_author: Eric Truett
+repo_url: https://github.com/sansbacon/pangadfs-pydfsoptimizer
+
+theme:
+  name: material
+
+plugins:
+  - search
+  - mkdocstrings
+
+markdown_extensions:
+  - toc
+  - admonition
+  - def_list
+  - pymdownx.tabbed
+  - pymdownx.superfences
+
+nav:
+    - Home: index.md
+    - About: about.md
+    - Code Reference:
+        - plugin: plugin-reference.md

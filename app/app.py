@@ -7,6 +7,7 @@ import json
 import logging
 
 from pangadfs.ga import GeneticAlgorithm
+from pangadfs.misc import diversity
 from pathlib import Path
 
 import numpy as np
@@ -31,7 +32,7 @@ def run():
 			'points_column': 'fppg',
 			'position_column': 'positions',
 			'salary_column': 'salary',
-			'select_method': 'roulette',
+			'select_method': 'diversity',
 			'stop_criteria': 10,
 			'verbose': True
 		},
@@ -163,8 +164,8 @@ def run():
 	# FINALIZE RESULTS
 	# show best score and lineup at conclusion
 	# will break after n_generations or when stop_criteria reached
-	print(pool.loc[best_lineup, :])
-	print(f'Lineup score: {best_fitness}')
+	popdiv = diversity(population)
+	print(popdiv)
 	
 
 if __name__ == '__main__':
