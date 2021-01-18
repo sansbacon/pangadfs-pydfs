@@ -1,11 +1,11 @@
-# pangadfs-pydfsoptimizer/plugin/pydfs.py
+# pangadfs_pydfs/pydfs/pydfs.py
 # plugins for interoperating with pydfs-lineup-optimizer
 
 from typing import List, Tuple, Union
 
 import numpy as np
 import pandas as pd
-from pydfs_lineup_optimizer import Lineup, Player
+from pydfs_lineup_optimizer import Lineup
 
 from pangadfs.base import PoolBase, PopulateBase
 
